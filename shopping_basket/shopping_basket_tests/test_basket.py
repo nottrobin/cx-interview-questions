@@ -36,3 +36,11 @@ class TestBasket(unittest.TestCase):
 
         self.assertEqual(self.basket_1.subtotal(), 5.16)
         self.assertEqual(self.basket_2.subtotal(), 6.96)
+
+    def test_discount(self):
+        """
+        Check discount() tells us how much is discounted based on added offers
+        """
+
+        self.assertEqual(self.basket_1.discount(), 0.99)
+        self.assertEqual(self.basket_2.discount(), 0.95)
