@@ -1,5 +1,8 @@
 # Shopping basket
 
+[![CircleCI build status](https://circleci.com/gh/nottrobin/cx-interview-questions.svg?style=shield)](https://circleci.com/gh/nottrobin/cx-interview-questions "CircleCI build status")
+[![Code coverage](https://codecov.io/gh/nottrobin/cx-interview-questions/branch/master/graph/badge.svg)](https://codecov.io/gh/nottrobin/cx-interview-questions "Code coverage")
+
 A shopping basket object for calculating the summary, discount and total price of a collection of products.
 
 This is my solution to [the shopping-basket assignment](https://github.com/ecs-cx/cx-interview-questions/blob/master/shopping_basket/assignment.md).
@@ -44,7 +47,9 @@ print("Total: £" + basket.total())
 
 ## Running tests
 
-The test scenarios in the assignment have been used in [the tests](shopping_basket_tests/test_basket.py). The tests can be run as follows:
+The test scenarios in the assignment have been used in [the tests](shopping_basket_tests/test_basket.py).
+
+The tests can be run as follows, from within the `shopping_basket` directory of this repository:
 
 ``` bash
 python3 -m unittest discover shopping_basket_tests

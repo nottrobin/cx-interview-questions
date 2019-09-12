@@ -1,3 +1,5 @@
+#! /usr/bin/env python3
+
 # Standard library
 import unittest
 
@@ -69,3 +71,7 @@ class TestBasket(unittest.TestCase):
 
         self.assertEqual(self.basket_1.total(), 4.17)
         self.assertEqual(self.basket_2.total(), 6.01)
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -1,0 +1,17 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: canonicalwebteam/dev
+
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: pip3 install coverage
+      - run:
+          name: Run tests with coverage
+          command: |
+            cd shopping_basket
+            PYTHONPATH=. coverage run  --source . ./shopping_basket_tests/test_basket.py
+            bash <(curl -s https://codecov.io/bash)
