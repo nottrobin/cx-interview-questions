@@ -67,3 +67,10 @@ class Basket:
             total_discount += offer.calculate_discount(skus=self.product_skus)
 
         return _round_price(total_discount)
+
+    def total(self) -> float:
+        """
+        Calculate the total from the subtotal and the discount
+        """
+
+        return self.subtotal() - self.discount()
