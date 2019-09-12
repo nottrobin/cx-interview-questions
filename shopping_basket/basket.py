@@ -1,8 +1,21 @@
 # Standard library
+import math
 from typing import Dict, List
 
 # Local modules
 from offers import Offer
+
+
+def _round_price(number: float):
+    """
+    Round to the nearest 2 decimal places, rounding half up.
+    This avoids the issue with Python's native `round` function
+    using a "round to even" strategy.
+
+    From https://realpython.com/python-rounding/#rounding-half-up
+    """
+
+    return math.floor(number * 100 + 0.5) / 100
 
 
 class Basket:
@@ -40,7 +53,7 @@ class Basket:
         for sku in self.product_skus:
             subtotal += self.product_catalog[sku]["price"]
 
-        return round(subtotal, 2)
+        return _round_price(subtotal)
 
     def discount(self) -> float:
         """
@@ -53,4 +66,4 @@ class Basket:
         for offer in self.offers:
             total_discount += offer.calculate_discount(skus=self.product_skus)
 
-        return total_discount
+        return _round_price(total_discount)

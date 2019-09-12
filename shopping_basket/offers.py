@@ -19,6 +19,11 @@ class Offer:
     """
 
     def calculate_discount(products: List[Dict]):
+        """
+        Given a list of products, check if this discount applies
+        to any of them, and apply the discount if it does
+        """
+
         raise NotImplementedError()
 
 
@@ -51,3 +56,31 @@ class GetOneFree(Offer):
                 discount += self.product_catalog[self.product_sku]["price"]
 
         return discount
+
+
+class PercentageDiscount(Offer):
+    """
+    An offer where an item gets a discount
+    """
+
+    def __init__(
+        self,
+        product_sku: str,
+        discount_percent: float,
+        product_catalog: Dict[str, Dict],
+    ):
+        self.product_sku = product_sku
+        self.discount_percent = discount_percent
+        self.product_catalog = product_catalog
+
+    def calculate_discount(self, skus: List[str]) -> float:
+        """
+        Given a list of products, check if this discount applies
+        to any of them, and apply the discount if it does
+        """
+
+        valid_items = [sku for sku in skus if sku == self.product_sku]
+        price = self.product_catalog[self.product_sku]["price"]
+        discount_per_item = price * self.discount_percent / 100
+
+        return discount_per_item * len(valid_items)

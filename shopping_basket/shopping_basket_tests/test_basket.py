@@ -4,7 +4,7 @@ import unittest
 # Local modules
 import catalog
 from basket import Basket
-from offers import GetOneFree
+from offers import GetOneFree, PercentageDiscount
 
 
 class TestBasket(unittest.TestCase):
@@ -21,6 +21,11 @@ class TestBasket(unittest.TestCase):
             GetOneFree(
                 product_sku="beans",
                 min_items=2,
+                product_catalog=catalog.products,
+            ),
+            PercentageDiscount(
+                product_sku="sardines",
+                discount_percent=25,
                 product_catalog=catalog.products,
             )
         ]
