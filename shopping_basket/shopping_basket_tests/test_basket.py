@@ -1,6 +1,10 @@
+# Standard library
 import unittest
+
+# Local modules
 import catalog
 from basket import Basket
+from offers import GetOneFree
 
 
 class TestBasket(unittest.TestCase):
@@ -13,7 +17,15 @@ class TestBasket(unittest.TestCase):
         Create the two baskets described in assignment.py
         """
 
-        self.basket_1 = Basket(product_catalog=catalog.products)
+        offers = [
+            GetOneFree(
+                product_sku="beans",
+                min_items=2,
+                product_catalog=catalog.products,
+            )
+        ]
+
+        self.basket_1 = Basket(product_catalog=catalog.products, offers=offers)
 
         self.basket_1.add_product("beans")
         self.basket_1.add_product("beans")
@@ -21,7 +33,7 @@ class TestBasket(unittest.TestCase):
         self.basket_1.add_product("beans")
         self.basket_1.add_product("biscuits")
 
-        self.basket_2 = Basket(product_catalog=catalog.products)
+        self.basket_2 = Basket(product_catalog=catalog.products, offers=offers)
 
         self.basket_2.add_product("beans")
         self.basket_2.add_product("beans")

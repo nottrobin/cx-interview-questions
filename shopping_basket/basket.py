@@ -1,15 +1,25 @@
-class Basket():
+# Standard library
+from typing import Dict, List
+
+# Local modules
+from offers import Offer
+
+
+class Basket:
     """
     A collection of products that a customer intends to purchase,
     with methods allowing you to calculate the subtotal and total
     price of all products, potentially with offers applied.
     """
 
-    def __init__(self, product_catalog):
+    def __init__(
+        self, product_catalog: Dict[str, Dict], offers: List[Offer] = []
+    ):
         self.product_catalog = product_catalog
-        self.products = []
+        self.product_skus = []
+        self.offers = offers
 
-    def add_product(self, sku):
+    def add_product(self, sku) -> None:
         """
         Add a product sku to the basket.
 
@@ -18,16 +28,29 @@ class Basket():
         get the most up-to-date price for each item.
         """
 
-        self.products.append(sku)
+        self.product_skus.append(sku)
 
-    def subtotal(self):
+    def subtotal(self) -> float:
         """
         Calculate the subtotal of all products in the basket
         """
 
         subtotal = 0
 
-        for sku in self.products:
+        for sku in self.product_skus:
             subtotal += self.product_catalog[sku]["price"]
 
         return round(subtotal, 2)
+
+    def discount(self) -> float:
+        """
+        Given the set of products in the basket and the available offers,
+        calculate the total discount
+        """
+
+        total_discount = 0
+
+        for offer in self.offers:
+            total_discount += offer.calculate_discount(skus=self.product_skus)
+
+        return total_discount
