@@ -2,7 +2,7 @@
 A dictionary of products
 
 This is a dictionary to allow the products to be
-indexed by a unique ID.
+indexed by a unique SKU.
 """
 
 products = {

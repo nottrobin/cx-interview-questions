@@ -5,5 +5,10 @@ class Basket():
     price of all products, potentially with offers applied.
     """
 
+    products = []
+
     def __init__(self, product_catalog):
         self.product_catalog = product_catalog
+
+    def add_product(self, sku):
+        self.products.append(sku)
