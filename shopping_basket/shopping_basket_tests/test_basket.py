@@ -61,3 +61,11 @@ class TestBasket(unittest.TestCase):
 
         self.assertEqual(self.basket_1.discount(), 0.99)
         self.assertEqual(self.basket_2.discount(), 0.95)
+
+    def test_total(self):
+        """
+        Check total() returns the expected total for both baskets
+        """
+
+        self.assertEqual(self.basket_1.total(), 4.17)
+        self.assertEqual(self.basket_2.total(), 6.01)
