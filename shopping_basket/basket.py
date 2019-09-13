@@ -27,10 +27,10 @@ class Basket:
 
     def __init__(
         self, product_catalog: Dict[str, Dict], offers: List[Offer] = []
-    ):
+    ) -> None:
         self.product_catalog = product_catalog
-        self.product_skus = []
         self.offers = offers
+        self.product_skus: List[str] = []
 
     def add_product(self, sku) -> None:
         """

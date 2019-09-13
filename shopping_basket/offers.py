@@ -4,7 +4,7 @@ from typing import List, Dict
 
 def _chunks(list_to_split, size):
     """
-    Yield successive n-sized chunks from list_to_split.
+    Yield successive chunks of the specified size from list_to_split.
     From https://stackoverflow.com/a/312464/613540
     """
 
@@ -18,7 +18,7 @@ class Offer:
     An interface class that defines the "calculate_discount" method
     """
 
-    def calculate_discount(products: List[Dict]):
+    def calculate_discount(self, products: List[Dict]):
         """
         Given a list of products, check if this discount applies
         to any of them, and apply the discount if it does
@@ -32,7 +32,7 @@ class GetOneFree(Offer):
     An offer where you get one item free if you buy x items
     """
 
-    def __init__(self, product_sku: str, min_items: int):
+    def __init__(self, product_sku: str, min_items: int) -> None:
         self.product_sku = product_sku
         self.min_items = min_items
 
@@ -42,7 +42,7 @@ class GetOneFree(Offer):
         to any of them, and apply the discount if it does
         """
 
-        discount = 0
+        discount = 0.0
         valid_products = []
 
         for product in products:
@@ -62,7 +62,7 @@ class CheapestFree(Offer):
     category
     """
 
-    def __init__(self, product_category: str, min_items: int):
+    def __init__(self, product_category: str, min_items: int) -> None:
         self.product_category = product_category
         self.min_items = min_items
 
@@ -72,7 +72,7 @@ class CheapestFree(Offer):
         to any of them, and apply the discount if it does
         """
 
-        discount = 0
+        discount = 0.0
         valid_items = []
 
         for product in products:
@@ -92,10 +92,10 @@ class CheapestFree(Offer):
 
 class PercentageDiscount(Offer):
     """
-    An offer where an item gets a discount
+    An offer where an item gets a percentage discount
     """
 
-    def __init__(self, product_sku: str, discount_percent: float):
+    def __init__(self, product_sku: str, discount_percent: float) -> None:
         self.product_sku = product_sku
         self.discount_percent = discount_percent
 
@@ -105,7 +105,7 @@ class PercentageDiscount(Offer):
         to any of them, and apply the discount if it does
         """
 
-        discount = 0
+        discount = 0.0
         valid_products = []
 
         for product in products:
