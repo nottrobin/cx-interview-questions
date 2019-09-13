@@ -17,6 +17,7 @@ You can use the `Basket` class to add and make calculations on products as illus
 
 ``` python3
 import catalog
+from basket import Basket
 from offers import CheapestFree, GetOneFree, PercentageDiscount
 
 basket = Basket(
