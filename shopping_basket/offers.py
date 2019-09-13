@@ -24,7 +24,7 @@ class Offer:
         to any of them, and apply the discount if it does
         """
 
-        raise NotImplementedError()
+        raise NotImplementedError()  # pragma: no cover
 
 
 class GetOneFree(Offer):
@@ -32,28 +32,60 @@ class GetOneFree(Offer):
     An offer where you get one item free if you buy x items
     """
 
-    def __init__(
-        self,
-        product_sku: str,
-        min_items: int,
-        product_catalog: Dict[str, Dict],
-    ):
+    def __init__(self, product_sku: str, min_items: int):
         self.product_sku = product_sku
         self.min_items = min_items
-        self.product_catalog = product_catalog
 
-    def calculate_discount(self, skus: List[str]) -> float:
+    def calculate_discount(self, products: List[Dict]) -> float:
         """
         Given a list of products, check if this discount applies
         to any of them, and apply the discount if it does
         """
 
-        valid_items = [sku for sku in skus if sku == self.product_sku]
         discount = 0
+        valid_products = []
 
-        for chunk in _chunks(valid_items, self.min_items + 1):
+        for product in products:
+            if product["sku"] == self.product_sku:
+                valid_products.append(product)
+
+        for chunk in _chunks(valid_products, self.min_items + 1):
             if len(chunk) == self.min_items + 1:
-                discount += self.product_catalog[self.product_sku]["price"]
+                discount += valid_products[0]["price"]
+
+        return discount
+
+
+class CheapestFree(Offer):
+    """
+    An offer where you get the cheapest item free from items in a specific
+    category
+    """
+
+    def __init__(self, product_category: str, min_items: int):
+        self.product_category = product_category
+        self.min_items = min_items
+
+    def calculate_discount(self, products: List[Dict]) -> float:
+        """
+        Given a list of products, check if this discount applies
+        to any of them, and apply the discount if it does
+        """
+
+        discount = 0
+        valid_items = []
+
+        for product in products:
+            if product.get("category") == self.product_category:
+                valid_items.append(product)
+
+        # Sort items by descending price so customers get the maximum discount
+        valid_items.sort(key=lambda product: product["price"], reverse=True)
+
+        for chunk in _chunks(valid_items, self.min_items):
+            if len(chunk) == self.min_items:
+                # The last item will be the cheapest
+                discount += chunk[self.min_items - 1]["price"]
 
         return discount
 
@@ -63,24 +95,26 @@ class PercentageDiscount(Offer):
     An offer where an item gets a discount
     """
 
-    def __init__(
-        self,
-        product_sku: str,
-        discount_percent: float,
-        product_catalog: Dict[str, Dict],
-    ):
+    def __init__(self, product_sku: str, discount_percent: float):
         self.product_sku = product_sku
         self.discount_percent = discount_percent
-        self.product_catalog = product_catalog
 
-    def calculate_discount(self, skus: List[str]) -> float:
+    def calculate_discount(self, products: List[Dict]) -> float:
         """
         Given a list of products, check if this discount applies
         to any of them, and apply the discount if it does
         """
 
-        valid_items = [sku for sku in skus if sku == self.product_sku]
-        price = self.product_catalog[self.product_sku]["price"]
-        discount_per_item = price * self.discount_percent / 100
+        discount = 0
+        valid_products = []
 
-        return discount_per_item * len(valid_items)
+        for product in products:
+            if product["sku"] == self.product_sku:
+                valid_products.append(product)
+
+        if valid_products:
+            price = valid_products[0]["price"]
+            discount_per_item = price * self.discount_percent / 100
+            discount = discount_per_item * len(valid_products)
+
+        return discount

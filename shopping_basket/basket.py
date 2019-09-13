@@ -62,9 +62,10 @@ class Basket:
         """
 
         total_discount = 0
+        products = [self.product_catalog[sku] for sku in self.product_skus]
 
         for offer in self.offers:
-            total_discount += offer.calculate_discount(skus=self.product_skus)
+            total_discount += offer.calculate_discount(products=products)
 
         return _round_price(total_discount)
 

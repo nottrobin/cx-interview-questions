@@ -17,21 +17,14 @@ You can use the `Basket` class to add and make calculations on products as illus
 
 ``` python3
 import catalog
-import offers
+from offers import CheapestFree, GetOneFree, PercentageDiscount
 
 basket = Basket(
     product_catalog=catalog.products,
     offers=[
-        offers.GetOneFree(
-            product_sku="beans",
-            min_items=2,
-            product_catalog=catalog.products,
-        ),
-        offers.PercentageDiscount(
-            product_sku="sardines",
-            discount_percent=25,
-            product_catalog=catalog.products,
-        )
+        GetOneFree(product_sku="beans", min_items=2),
+        PercentageDiscount(product_sku="sardines", discount_percent=25),
+        CheapestFree(product_category="shampoo", min_items=3)
     ]
 )
 
