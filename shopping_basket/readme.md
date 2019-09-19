@@ -9,7 +9,7 @@ This is my solution to [the shopping-basket assignment](https://github.com/ecs-c
 
 ## Usage
 
-This implementation requires Python 3.6 or greater.
+This implementation requires Python 3.5 or greater.
 
 The `Basket` class is contained in [`basket.py`](basket.py#L21). It makes use of the products defined in [`catalog.py`](catalog.py) and the offer classes in [`offers.py`](offers.py).
 
